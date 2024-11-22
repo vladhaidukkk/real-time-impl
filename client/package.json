@@ -1,14 +1,29 @@
 {
-  "name": "real-time-client",
   "private": true,
+  "name": "real-time-client",
   "version": "0.1.0",
+  "description": "Client that communicates with the real-time server",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "fmt": "prettier --write .",
+    "fmt:check": "prettier --check ."
   },
   "devDependencies": {
+    "prettier": "^3.3.3",
     "vite": "^5.4.10"
+  },
+  "prettier": {
+    "printWidth": 160,
+    "tabWidth": 2,
+    "useTabs": false,
+    "semi": true,
+    "singleQuote": false,
+    "trailingComma": "es5",
+    "bracketSpacing": true,
+    "bracketSameLine": false,
+    "arrowParens": "always"
   }
 }
