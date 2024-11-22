@@ -1,0 +1,6 @@
+[project]
+name = "real-time-server"
+version = "0.1.0"
+description = "Server with several real-time communication implementations"
+requires-python = ">=3.12"
+dependencies = []
