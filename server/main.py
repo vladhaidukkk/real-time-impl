@@ -5,14 +5,16 @@ from typing import ClassVar
 from starlette import status
 from starlette.applications import Starlette
 from starlette.endpoints import HTTPEndpoint
+from starlette.middleware import Middleware
+from starlette.middleware.cors import CORSMiddleware
 from starlette.requests import Request
 from starlette.responses import JSONResponse
 from starlette.routing import Route
 
 
 class LongPollingMessages(HTTPEndpoint):
-    TIMEOUT: float = 10.0
-    DELAY: float = 5.0
+    TIMEOUT: float = 30.0
+    DELAY: float = 1.0
 
     messages_queue: ClassVar[list[str]] = []
 
@@ -38,4 +40,6 @@ class LongPollingMessages(HTTPEndpoint):
 
 routes = [Route("/messages", LongPollingMessages)]
 
-app = Starlette(routes=routes)
+middleware = [Middleware(CORSMiddleware, allow_origins=["*"])]
+
+app = Starlette(routes=routes, middleware=middleware)
