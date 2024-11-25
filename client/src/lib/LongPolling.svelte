@@ -10,7 +10,7 @@
 
   async function subscribeToMessages() {
     try {
-      const { data } = await axios.get("http://127.0.0.1:8000/lp/messages");
+      const { data } = await axios.get("http://127.0.0.1:8000/lp/messages", { withCredentials: true });
       messages.push(...data.messages);
       await subscribeToMessages();
     } catch (error) {
@@ -22,7 +22,7 @@
 
   async function sendMessage(event) {
     event.preventDefault();
-    await axios.post("http://127.0.0.1:8000/lp/messages", { message });
+    await axios.post("http://127.0.0.1:8000/lp/messages", { message }, { withCredentials: true });
     message = "";
   }
 </script>

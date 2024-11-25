@@ -13,3 +13,6 @@ Thumbs.db
 !.vscode/extensions.json
 !.vscode/*.code-snippets
 !.vscode/*.code-workspace
+
+# Environtment variables
+.env

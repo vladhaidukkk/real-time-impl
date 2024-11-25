@@ -3,7 +3,12 @@ name = "real-time-server"
 version = "0.1.0"
 description = "Server with several real-time communication implementations"
 requires-python = ">=3.12"
-dependencies = ["starlette>=0.41.3", "uvicorn[standard]>=0.32.1"]
+dependencies = [
+  "itsdangerous>=2.2.0",
+  "python-decouple>=3.8",
+  "starlette>=0.41.3",
+  "uvicorn[standard]>=0.32.1",
+]
 
 [dependency-groups]
 dev = ["ruff>=0.8.0"]
