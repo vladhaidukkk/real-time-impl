@@ -1,20 +1,17 @@
 from asyncio import sleep
+from json import JSONDecodeError
 from time import time
 from typing import ClassVar
 
 from starlette import status
-from starlette.applications import Starlette
 from starlette.endpoints import HTTPEndpoint
-from starlette.middleware import Middleware
-from starlette.middleware.cors import CORSMiddleware
 from starlette.requests import Request
 from starlette.responses import JSONResponse
-from starlette.routing import Route
 
 
 class LongPollingMessages(HTTPEndpoint):
     TIMEOUT: float = 30.0
-    DELAY: float = 1.0
+    DELAY: float = 5.0
 
     messages_queue: ClassVar[list[str]] = []
 
@@ -33,13 +30,18 @@ class LongPollingMessages(HTTPEndpoint):
         return JSONResponse({"message": "Request timed out"}, status.HTTP_504_GATEWAY_TIMEOUT)
 
     async def post(self, request: Request) -> JSONResponse:
-        body = await request.body()
-        self.messages_queue.append(body.decode())
-        return JSONResponse({"message": "Message sent"})
+        try:
+            data = await request.json()
+            message = data["message"]
+        except JSONDecodeError:
+            resp_message = "Invalid JSON data"
+            resp_code = status.HTTP_400_BAD_REQUEST
+        except KeyError:
+            resp_message = "Message not provided"
+            resp_code = status.HTTP_400_BAD_REQUEST
+        else:
+            self.messages_queue.append(message)
+            resp_message = "Message accepted"
+            resp_code = status.HTTP_201_CREATED
 
-
-routes = [Route("/messages", LongPollingMessages)]
-
-middleware = [Middleware(CORSMiddleware, allow_origins=["*"])]
-
-app = Starlette(routes=routes, middleware=middleware)
+        return JSONResponse({"message": resp_message}, status_code=resp_code)

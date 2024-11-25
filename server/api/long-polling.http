@@ -1,0 +1,10 @@
+GET http://127.0.0.1:8000/lp/messages HTTP/1.1
+
+###
+
+POST http://127.0.0.1:8000/lp/messages HTTP/1.1
+Content-Type: application/json
+
+{
+    "message": "Hello, World!"
+}
