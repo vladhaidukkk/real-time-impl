@@ -40,8 +40,12 @@ class LongPollingMessages(HTTPEndpoint):
             resp_message = "Message not provided"
             resp_code = status.HTTP_400_BAD_REQUEST
         else:
-            self.messages_queue.append(message)
-            resp_message = "Message accepted"
-            resp_code = status.HTTP_201_CREATED
+            if message:
+                self.messages_queue.append(message)
+                resp_message = "Message accepted"
+                resp_code = status.HTTP_201_CREATED
+            else:
+                resp_message = "Message cannot be empty"
+                resp_code = status.HTTP_422_UNPROCESSABLE_ENTITY
 
         return JSONResponse({"message": resp_message}, status_code=resp_code)

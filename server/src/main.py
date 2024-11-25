@@ -7,6 +7,6 @@ from .long_polling import LongPollingMessages
 
 routes = [Route("/lp/messages", LongPollingMessages)]
 
-middleware = [Middleware(CORSMiddleware, allow_origins=["*"])]
+middleware = [Middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"])]
 
 app = Starlette(routes=routes, middleware=middleware)
