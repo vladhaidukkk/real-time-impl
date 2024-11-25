@@ -1,5 +1,5 @@
 {
-  "[html][css][javascript][json]": {
+  "[html][css][javascript][svelte][json]": {
     "editor.rulers": [160],
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
