@@ -1,0 +1,12 @@
+GET http://127.0.0.1:8000/sse/messages HTTP/1.1
+Cookie: session=eyJzZXNzaW9uX2lkIjogMX0=.Z0TXmQ.KA-5LMHNr6jEEeHmvhqRs5S58uY
+
+###
+
+POST http://127.0.0.1:8000/sse/messages HTTP/1.1
+Content-Type: application/json
+Cookie: session=eyJzZXNzaW9uX2lkIjogMX0=.Z0TXmQ.KA-5LMHNr6jEEeHmvhqRs5S58uY
+
+{
+    "message": "Hello, World!"
+}

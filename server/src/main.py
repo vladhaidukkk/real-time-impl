@@ -7,8 +7,12 @@ from starlette.routing import Route
 from .config import SECRET_KEY
 from .long_polling import LongPollingMessages
 from .session import SessionManagerMiddleware
+from .sse import ServerSentMessages
 
-routes = [Route("/lp/messages", LongPollingMessages)]
+routes = [
+    Route("/lp/messages", LongPollingMessages),
+    Route("/sse/messages", ServerSentMessages),
+]
 
 middleware = [
     Middleware(
