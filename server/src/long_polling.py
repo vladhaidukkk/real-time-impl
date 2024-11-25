@@ -5,7 +5,6 @@ from time import time
 from typing import ClassVar
 
 from starlette import status
-from starlette.datastructures import Address
 from starlette.endpoints import HTTPEndpoint
 from starlette.requests import Request
 from starlette.responses import JSONResponse
@@ -15,19 +14,19 @@ class LongPollingMessages(HTTPEndpoint):
     TIMEOUT: float = 30.0
     DELAY: float = 1.0
 
-    # Mapping of clients to messages offset.
-    clients: ClassVar[defaultdict[Address, int]] = defaultdict(lambda: 0)
+    session_id_to_offset: ClassVar[defaultdict[int, int]] = defaultdict(lambda: 0)
     messages: ClassVar[list[str]] = []
 
     async def get(self, request: Request) -> JSONResponse:
         start_time = time()
 
         while time() - start_time < self.TIMEOUT:
-            messages_offset = self.clients[request.client]
-            messages_to_send = self.messages[messages_offset:]
+            session_id = request.session["session_id"]
+            offset = self.session_id_to_offset[session_id]
+            messages_to_send = self.messages[offset:]
 
             if messages_to_send:
-                self.clients[request.client] = len(self.messages)
+                self.session_id_to_offset[session_id] = len(self.messages)
                 return JSONResponse({"messages": messages_to_send})
 
             # Non-blocking sleep, to continue processing new requests.

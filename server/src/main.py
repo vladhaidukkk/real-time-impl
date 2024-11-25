@@ -6,6 +6,7 @@ from starlette.routing import Route
 
 from .config import SECRET_KEY
 from .long_polling import LongPollingMessages
+from .session import SessionManagerMiddleware
 
 routes = [Route("/lp/messages", LongPollingMessages)]
 
@@ -17,6 +18,7 @@ middleware = [
         allow_credentials=True,
     ),
     Middleware(SessionMiddleware, secret_key=SECRET_KEY),
+    Middleware(SessionManagerMiddleware),
 ]
 
 app = Starlette(routes=routes, middleware=middleware)
