@@ -8,10 +8,12 @@ from .config import SECRET_KEY
 from .long_polling import LongPollingMessages
 from .session import SessionManagerMiddleware
 from .sse import ServerSentMessages
+from .ws import WebSocketMessages
 
 routes = [
     Route("/lp/messages", LongPollingMessages),
     Route("/sse/messages", ServerSentMessages),
+    Route("/ws/messages", WebSocketMessages),
 ]
 
 middleware = [
