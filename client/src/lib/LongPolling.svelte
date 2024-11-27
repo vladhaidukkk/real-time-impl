@@ -36,7 +36,7 @@
     </form>
   </div>
   <div class="flex flex-col gap-2 rounded border p-4 shadow">
-    <h5 class="text-xl">Real-Time Messages</h5>
+    <h5 class="text-xl">Long Polling Messages</h5>
     {#if messages.length > 0}
       <ul>
         {#each messages as message}
