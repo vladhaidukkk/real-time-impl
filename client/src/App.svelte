@@ -1,7 +1,8 @@
 <script>
   import "./app.css";
-  import LongPolling from "./lib/LongPolling.svelte";
-  import ServerSentEvents from "./lib/ServerSentEvents.svelte";
+  import LongPollingMessages from "./lib/LongPolling.svelte";
+  import ServerSentMessages from "./lib/ServerSentEvents.svelte";
+  import WebSocketMessages from "./lib/WebSocket.svelte";
 
   let view = $state("lp");
 
@@ -26,12 +27,19 @@
         Server-Sent Events
       </button>
     {/if}
+    {#if view === "ws"}
+      <button class="rounded border bg-sky-700 p-2 text-white hover:bg-sky-600">WebSocket</button>
+    {:else}
+      <button type="button" onclick={() => changeView("ws")} class="rounded border p-2 transition-colors hover:bg-sky-600 hover:text-white">WebSocket</button>
+    {/if}
   </div>
   <div>
     {#if view === "lp"}
-      <LongPolling />
+      <LongPollingMessages />
     {:else if view === "sse"}
-      <ServerSentEvents />
+      <ServerSentMessages />
+    {:else if view === "ws"}
+      <WebSocketMessages />
     {/if}
   </div>
 </main>

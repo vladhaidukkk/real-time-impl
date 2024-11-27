@@ -2,7 +2,7 @@ from starlette.applications import Starlette
 from starlette.middleware import Middleware
 from starlette.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
-from starlette.routing import Route
+from starlette.routing import Route, WebSocketRoute
 
 from .config import SECRET_KEY
 from .long_polling import LongPollingMessages
@@ -13,7 +13,7 @@ from .ws import WebSocketMessages
 routes = [
     Route("/lp/messages", LongPollingMessages),
     Route("/sse/messages", ServerSentMessages),
-    Route("/ws/messages", WebSocketMessages),
+    WebSocketRoute("/ws/messages", WebSocketMessages),
 ]
 
 middleware = [
